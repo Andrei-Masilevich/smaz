@@ -90,6 +90,11 @@ int smaz_compress(char* pin, int inlen, char* pout, int outlen)
         char* flush = NULL;
         char* slot;
 
+        /* Deny compression for non latin characters */
+        unsigned char ch = (unsigned char)pin[0];
+        if (ch >= 128)
+            return 0;
+
         h1 = h2 = pin[0] << 3;
         if (inlen > 1)
             h2 += pin[1];
